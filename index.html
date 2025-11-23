@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐶 妙麗歲數計算機</title>
     <link rel="icon" type="image/png" href="img/icon.png">
     <link rel="apple-touch-icon" href="img/icon.png">
@@ -11,7 +12,7 @@
         body {
             font-family: "Noto Sans TC", sans-serif;
             background: #fff7ef;
-            padding: 40px;
+            padding: 24px;
             display: flex;
             justify-content: center;
         }
@@ -20,26 +21,26 @@
             background: white;
             padding: 28px 32px;
             border-radius: 16px;
-            width: 360px;
-            max-width: 95%;
+            width: 100%;
+            max-width: 420px;
             box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
             text-align: center;
         }
 
         .corgi-icon {
-            width: 130px;
+            width: 140px;
             margin: 0 auto 16px;
             display: block;
         }
 
         h2 {
             margin-bottom: 20px;
-            font-size: 22px;
+            font-size: 24px;
             color: #c36c2d;
         }
 
         label {
-            font-size: 15px;
+            font-size: 16px;
             display: block;
             margin-bottom: 6px;
             color: #8a4f2b;
@@ -48,24 +49,22 @@
 
         input {
             width: 100%;
-            padding: 12px;
-            /* 與按鈕一致 */
+            padding: 14px;
             border: 1px solid #e1c7b3;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            /* 與按鈕距離一致 */
-            font-size: 15px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 16px;
             box-sizing: border-box;
         }
 
         button {
             width: 100%;
-            padding: 12px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 17px;
             background: #ffe3c8;
             border: 2px solid #d28a3b;
             color: #a15a1d;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
             font-weight: bold;
@@ -81,9 +80,9 @@
             margin-top: 20px;
             background: #fff3e6;
             border-left: 4px solid #d28a3b;
-            padding: 14px 18px;
-            border-radius: 6px;
-            font-size: 15px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
             line-height: 1.6;
             display: none;
             color: #6b3b18;
@@ -92,8 +91,32 @@
 
         .highlight {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 19px;
             color: #c36c2d;
+        }
+
+        /* Small phones */
+        @media (max-width: 380px) {
+            .card {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .corgi-icon {
+                width: 120px;
+            }
+        }
+
+        /* Larger tablets */
+        @media (min-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
+            .card {
+                padding: 40px;
+                max-width: 460px;
+            }
         }
     </style>
 </head>
@@ -101,7 +124,6 @@
 <body>
     <div class="card">
 
-        <!-- 使用 Unsplash API 自動取得柯基圖片，符合規則 -->
         <img class="corgi-icon" src="img/corgi-pic.jpg" alt="可愛柯基" />
 
         <h2>🐶 妙麗歲數計算機</h2>
@@ -115,23 +137,15 @@
     </div>
 
     <script>
-        // 頁面載入時 → 判斷是否已有 localStorage
         window.onload = function () {
             const savedBirth = localStorage.getItem("dogBirth");
-
-            if (savedBirth) {
-                document.getElementById("birth").value = savedBirth;
-            } else {
-                // 首次使用 → 填入預設生日
-                document.getElementById("birth").value = "2023-02-28";
-            }
+            document.getElementById("birth").value = savedBirth || "2023-02-28";
         };
 
         function calculateAge() {
             const birthDate = document.getElementById("birth").value;
             if (!birthDate) return;
 
-            // 儲存到 localStorage
             localStorage.setItem("dogBirth", birthDate);
 
             const birth = new Date(birthDate);
@@ -145,10 +159,7 @@
 
             const resultBox = document.getElementById("result");
             resultBox.style.display = "block";
-            resultBox.innerHTML = `
-        妙麗現在大約 <span class="highlight">${dogAge}</span> 歲狗狗年齡，<br>
-        換算成人類年齡大約是 <span class="highlight">${humanAge}</span> 歲。
-      `;
+            resultBox.innerHTML = `妙麗現在大約 <span class="highlight">${dogAge}</span> 歲狗狗年齡，<br>換算成人類年齡大約是 <span class="highlight">${humanAge}</span> 歲。`;
         }
     </script>
 </body>
