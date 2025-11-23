@@ -118,7 +118,20 @@
                 max-width: 460px;
             }
         }
-    </style>
+        @media (max-width: 480px) {
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 14px;
+            background-color: #f4f2f0;
+            text-align: center;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0;
+        }
+    }
+</style>
 </head>
 
 <body>
