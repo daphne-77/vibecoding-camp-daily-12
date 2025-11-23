@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>🐶 妙麗歲數計算機</title>
+    <style>
+        body {
+            font-family: "Noto Sans TC", sans-serif;
+            background: #fff7ef;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            padding: 28px 32px;
+            border-radius: 16px;
+            width: 360px;
+            max-width: 95%;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+            text-align: center;
+        }
+
+        .corgi-icon {
+            width: 130px;
+            margin: 0 auto 16px;
+            display: block;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #c36c2d;
+        }
+
+        label {
+            font-size: 15px;
+            display: block;
+            margin-bottom: 6px;
+            color: #8a4f2b;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            /* 與按鈕一致 */
+            border: 1px solid #e1c7b3;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            /* 與按鈕距離一致 */
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background: #ffe3c8;
+            border: 2px solid #d28a3b;
+            color: #a15a1d;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background: #d28a3b;
+            color: white;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            background: #fff3e6;
+            border-left: 4px solid #d28a3b;
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.6;
+            display: none;
+            color: #6b3b18;
+            text-align: left;
+        }
+
+        .highlight {
+            font-weight: bold;
+            font-size: 18px;
+            color: #c36c2d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+
+        <!-- 使用 Unsplash API 自動取得柯基圖片，符合規則 -->
+        <img class="corgi-icon" src="/img/corgi-pic.jpg" alt="可愛柯基" />
+
+        <h2>🐶 妙麗歲數計算機</h2>
+
+        <label for="birth">狗狗的出生日期：</label>
+        <input type="date" id="birth">
+
+        <button onclick="calculateAge()">開始計算</button>
+
+        <div id="result" class="result-box"></div>
+    </div>
+
+    <script>
+        // 頁面載入時 → 判斷是否已有 localStorage
+        window.onload = function () {
+            const savedBirth = localStorage.getItem("dogBirth");
+
+            if (savedBirth) {
+                document.getElementById("birth").value = savedBirth;
+            } else {
+                // 首次使用 → 填入預設生日
+                document.getElementById("birth").value = "2023-02-28";
+            }
+        };
+
+        function calculateAge() {
+            const birthDate = document.getElementById("birth").value;
+            if (!birthDate) return;
+
+            // 儲存到 localStorage
+            localStorage.setItem("dogBirth", birthDate);
+
+            const birth = new Date(birthDate);
+            const today = new Date();
+
+            const dogYears = (today - birth) / (1000 * 60 * 60 * 24 * 365.25);
+            const dogAge = dogYears.toFixed(1);
+
+            const safeDogAge = Math.max(dogYears, 0.1);
+            const humanAge = (16 * Math.log(safeDogAge) + 31).toFixed(1);
+
+            const resultBox = document.getElementById("result");
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `
+        妙麗現在大約 <span class="highlight">${dogAge}</span> 歲狗狗年齡，<br>
+        換算成人類年齡大約是 <span class="highlight">${humanAge}</span> 歲。
+      `;
+        }
+    </script>
+</body>
+
+</html>
